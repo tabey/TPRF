@@ -28,7 +28,7 @@ Steps 1 and 2 use only lagged target data, so there is no look-ahead bias. The Î
 ## Usage
 
 ```python
-from main import TPRF
+from tprf import TPRF
 
 # X: (n_samples, n_features) matrix of high-frequency indicators
 # y: (n_samples,) vector of the target (e.g., GDP growth)
