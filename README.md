@@ -11,7 +11,7 @@ This makes it particularly well-suited for macroeconomic nowcasting, where you h
 ## The Three Steps
 
 1. **Time-Series Regressions** — Regress the target on each predictor individually. The resulting slopes (β) measure each indicator's relevance to the target.
-2. **Cross-Sectional Regression** — At each time period, regress the observed indicators onto their β weights. This yields the TPRF factor: a weighted average where indicators with stronger target relationships receive higher loadings.
+2. **Cross-Sectional Regression** — At each time period, regress the observed indicators onto their β weights. This yields the TPRF factor: a linear combination where indicators with stronger target relationships receive higher loadings.
 3. **Forecasting Regression** — Use the TPRF factor as an exogenous regressor in an ARX/ARIMAX model to produce forecasts.
 
 Steps 1 and 2 use only lagged target data, so there is no look-ahead bias. The β weights are frozen after Step 1, making real-time updates fast and stable.
