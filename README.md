@@ -1,6 +1,6 @@
 # TPRF: Three-Pass Regression Filter for Nowcasting
 
-A Python implementation of the **Three-Pass Regression Filter (TPRF)** from Kelly & Pruitt (2015), with applications to GDP nowcasting as evaluated in Akepanidtaworn & Akepanidtaworn (2025).
+A Python/R implementation of the **Three-Pass Regression Filter (TPRF)** from Kelly & Pruitt (2015), with applications to GDP nowcasting as evaluated in Akepanidtaworn & Akepanidtaworn (2025).
 
 ## What is TPRF?
 
