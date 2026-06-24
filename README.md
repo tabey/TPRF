@@ -61,7 +61,7 @@ tprf_test = model.transform(X_test)    # Step 2 on new data (betas frozen)
 ### R
 
 ```r
-library(R6)
+source('tprf.r')
 
 # X: matrix of high-frequency indicators (n_samples x n_features)
 # y: numeric vector of the target (e.g., GDP growth)
