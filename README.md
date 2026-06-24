@@ -1,6 +1,6 @@
 # TPRF: Three-Pass Regression Filter for Nowcasting
 
-A Python/R implementation of the **Three-Pass Regression Filter (TPRF)** from Kelly & Pruitt (2015), with applications to GDP nowcasting as evaluated in Akepanidtaworn & Akepanidtaworn (2025).
+A Python and R implementation of the **Three-Pass Regression Filter (TPRF)** from Kelly & Pruitt (2015), with applications to GDP nowcasting as evaluated in Akepanidtaworn & Akepanidtaworn (2025).
 
 ## What is TPRF?
 
@@ -25,7 +25,23 @@ Steps 1 and 2 use only lagged target data, so there is no look-ahead bias. The �
 | Requires target for factor extraction | No | Yes |
 | Look-ahead bias | No | No |
 
+## Installation
+
+### Python
+
+```bash
+pip install numpy scikit-learn
+```
+
+### R
+
+```r
+install.packages("R6")
+```
+
 ## Usage
+
+### Python
 
 ```python
 from tprf import TPRF
@@ -34,7 +50,7 @@ from tprf import TPRF
 # y: (n_samples,) vector of the target (e.g., GDP growth)
 
 model = TPRF()
-model.fit(X_train, y_train)       # Step 1: learn the betas
+model.fit(X_train, y_train)            # Step 1: learn the betas
 tprf_train = model.transform(X_train)  # Step 2: extract factor
 tprf_test = model.transform(X_test)    # Step 2 on new data (betas frozen)
 
@@ -42,13 +58,31 @@ tprf_test = model.transform(X_test)    # Step 2 on new data (betas frozen)
 # e.g., ARIMAX, OLS, etc.
 ```
 
-A synthetic example is available in `example.ipynb`.
+### R
+
+```r
+library(R6)
+
+# X: matrix of high-frequency indicators (n_samples x n_features)
+# y: numeric vector of the target (e.g., GDP growth)
+
+model <- TPRF$new()
+model$fit(X_train, y_train)            # Step 1: learn the betas
+tprf_train <- model$transform(X_train) # Step 2: extract factor
+tprf_test <- model$transform(X_test)   # Step 2 on new data (betas frozen)
+
+# Step 3: use TPRF as exogenous regressor in your forecasting model
+# e.g., arima(), auto.arima(), lm(), etc.
+```
+
+Synthetic examples in both languages are available in `example.ipynb` notebooks.
 
 ## Implementation Notes
 
-- **Standardization**: Features and target are standardized internally before Step 1. This ensures the β weights reflect correlation strength rather than scale differences.
+- **Standardization**: Features and target are standardized internally before Step 1. This ensures the β weights reflect correlation strength rather than scale differences. The Python version uses sklearn's `StandardScaler` (population std, ddof = 0); the R version replicates this exactly rather than using R's default `scale()` (sample std, ddof = 1) to ensure parity.
 - **Frequency mismatch**: This implementation assumes all data has been converted to a common frequency (e.g., via temporal aggregation or blocking) before being passed to the model.
 - **No look-ahead**: Steps 1 and 2 use only lagged target data. The nowcast in Step 3 uses only the current period's TPRF factor value.
+- **R dependencies**: The R port requires the `R6` package. Plotting in the example additionally requires `ggplot2` and `patchwork`.
 
 ## References
 
